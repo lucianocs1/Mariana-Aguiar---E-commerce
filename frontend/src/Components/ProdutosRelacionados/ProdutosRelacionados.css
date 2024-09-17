@@ -1,0 +1,40 @@
+.produtos-relacionados {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 100px;
+}
+
+.produtos-relacionados h1 {
+  color: #171717;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.produtos-relacionados hr {
+  width: 150px;
+  height: 4px;
+  border-radius: 10px;
+  background: #252525;
+}
+
+.produtos-relacionados-item {
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1280px;
+}
+
+@media (max-width: 600px) {
+  .produtos-relacionados h1 {
+    font-size: 30px;
+  }
+  .produtos-relacionados hr {
+    width: 100px;
+    height: 4px;
+  }
+}

@@ -1,0 +1,71 @@
+.listar-produto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 740px;
+  padding: 10px 50px;
+  margin: 30px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.listar-produto-format-principal {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.listar-produto-format {
+  width: 100%;
+  align-items: center;
+  font-weight: 500;
+}
+
+.listar-produto-icone-produto {
+  height: 80px;
+}
+
+.listar-produto-icones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.listar-produto-icone-editar,
+.listar-produto-icone-remover {
+  width: 20px;
+  cursor: pointer;
+}
+
+.listar-produto-todos-produtos {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+@media (max-width: 800px) {
+  .listar-produto {
+    box-sizing: border-box;
+    width: 95%;
+    height: 100%;
+    padding: 10px 30px;
+    margin: 20px auto;
+  }
+
+  .listar-produto-format-principal {
+    padding: 15px 0px;
+    color: #454545;
+    font-size: 12px;
+  }
+
+  .listar-produto-icone-produto {
+    height: 60px;
+  }
+}

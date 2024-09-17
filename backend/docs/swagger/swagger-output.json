@@ -1,0 +1,1165 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "E-commerce - Mariana Aguiar",
+    "description": "Documentação das API's do projeto Mariana Aguiar",
+    "termsOfService": "https://mockapi.io",
+    "contact": {
+      "name": "Suporte Técnico",
+      "url": "https://www.exemplo.com/contato"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Realiza o login do usuário",
+        "description": "Este endpoint autentica o usuário com base no email e senha fornecidos e retorna um token JWT se bem-sucedido.",
+        "responses": {
+          "200": {
+            "description": "Login bem-sucedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token JWT de autenticação"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Nome do usuário"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Falha na autenticação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "E-mail ou senha está incorreto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "E-mail do usuário"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Senha do usuário"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "tags": [
+          "Autenticação"
+        ],
+        "summary": "Cria um novo usuário",
+        "description": "Este endpoint registra um novo usuário, cria um carrinho padrão e retorna um token JWT para autenticação.",
+        "responses": {
+          "200": {
+            "description": "Registro bem-sucedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token JWT de autenticação"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Nome do usuário"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "E-mail inválido ou já em uso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "errors": {
+                      "type": "string",
+                      "example": "E-mail inválido ou já em uso"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Nome do usuário"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "E-mail do usuário"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Senha do usuário"
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addcarrinho": {
+      "post": {
+        "tags": [
+          "Carrinho"
+        ],
+        "summary": "Adiciona um item ao carrinho do usuário",
+        "description": "Este endpoint adiciona um item ao carrinho do usuário identificado pelo token JWT.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token JWT do usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item adicionado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Adicionado"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao adicionar item ao carrinho",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao adicionar ao carrinho"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "itemId": {
+                    "type": "string",
+                    "description": "ID do item a ser adicionado"
+                  }
+                },
+                "required": [
+                  "itemId"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/removecarrinho": {
+      "post": {
+        "tags": [
+          "Carrinho"
+        ],
+        "summary": "Remove um item do carrinho do usuário",
+        "description": "Este endpoint remove um item do carrinho do usuário identificado pelo token JWT.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token JWT do usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item removido com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Removido"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Item não encontrado ou quantidade inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Item não encontrado no carrinho ou quantidade inválida"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Erro ao remover item do carrinho",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao remover do carrinho"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "itemId": {
+                    "type": "string",
+                    "description": "ID do item a ser removido"
+                  }
+                },
+                "required": [
+                  "itemId"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getcarrinho": {
+      "get": {
+        "tags": [
+          "Carrinho"
+        ],
+        "summary": "Busca o carrinho do usuário",
+        "description": "Este endpoint retorna os itens do carrinho do usuário identificado pelo token JWT.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token JWT do usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Carrinho retornado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "description": "Quantidade de itens no carrinho"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar o carrinho",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar o carrinho"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/allproducts": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna todos os produtos",
+        "description": "Este endpoint retorna todos os produtos disponíveis no banco de dados.",
+        "responses": {
+          "200": {
+            "description": "Lista de produtos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar produtos"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/newcollections": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna os últimos 8 produtos da coleção",
+        "description": "Este endpoint retorna os últimos 8 produtos adicionados à coleção.",
+        "responses": {
+          "200": {
+            "description": "Lista dos últimos 8 produtos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar os produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar os produtos"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/popular": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna os 4 produtos mais populares da categoria \"roupas\"",
+        "description": "Este endpoint retorna os primeiros 4 produtos populares da categoria \"roupas\".",
+        "responses": {
+          "200": {
+            "description": "Lista dos 4 produtos populares retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar os produtos populares",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar os produtos populares"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/produto/{id}": {
+      "get": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna os detalhes de um produto pelo ID",
+        "description": "Este endpoint busca e retorna os detalhes de um produto específico com base no ID fornecido.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do produto a ser buscado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do produto retornados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Produto não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar o produto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar o produto"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/relatedproducts": {
+      "post": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Retorna produtos relacionados com base na categoria",
+        "description": "Este endpoint retorna até 4 produtos relacionados com base na categoria fornecida no corpo da requisição.",
+        "responses": {
+          "200": {
+            "description": "Lista de produtos relacionados retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar os produtos relacionados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao buscar os produtos relacionados"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "description": "Categoria dos produtos relacionados"
+                  }
+                },
+                "required": [
+                  "category"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addproduct": {
+      "post": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Adiciona um novo produto",
+        "description": "Este endpoint adiciona um novo produto ao banco de dados.",
+        "responses": {
+          "200": {
+            "description": "Produto adicionado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Nome do produto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao adicionar o produto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao adicionar o produto"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Nome do produto"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Descrição do produto"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "URL da imagem do produto"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Categoria do produto"
+                  },
+                  "new_price": {
+                    "type": "number",
+                    "description": "Preço novo do produto"
+                  },
+                  "old_price": {
+                    "type": "number",
+                    "description": "Preço antigo do produto"
+                  }
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "image",
+                  "category",
+                  "new_price"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/removeproduct": {
+      "post": {
+        "tags": [
+          "Produtos"
+        ],
+        "summary": "Remove um produto",
+        "description": "Este endpoint remove um produto existente no banco de dados com base no ID fornecido.",
+        "responses": {
+          "200": {
+            "description": "Produto removido com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Nome do produto removido"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Produto não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao remover o produto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Erro ao remover o produto"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "description": "ID do produto a ser removido"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Nome do produto a ser removido"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "ID do usuário"
+                  }
+                }
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Nome do usuário"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "E-mail do usuário"
+                  }
+                }
+              },
+              "password": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Senha do usuário"
+                  }
+                }
+              },
+              "dadosCarrinho": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "object"
+                  },
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "integer"
+                      }
+                    }
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Objeto que contém os itens do carrinho, onde a chave é o ID do item e o valor é a quantidade"
+                  }
+                }
+              },
+              "date": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Data de criação do usuário"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Produto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "ID do produto"
+                  }
+                }
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Nome do produto"
+                  }
+                }
+              },
+              "description": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Descrição do produto"
+                  }
+                }
+              },
+              "image": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "URL da imagem do produto"
+                  }
+                }
+              },
+              "category": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Categoria do produto"
+                  }
+                }
+              },
+              "new_price": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Preço atual do produto"
+                  }
+                }
+              },
+              "old_price": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Preço antigo do produto"
+                  }
+                }
+              },
+              "date": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Data de criação do produto"
+                  }
+                }
+              },
+              "available": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "boolean"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Disponibilidade do produto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Carrinho": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "ID do item no carrinho"
+                  }
+                }
+              },
+              "quantity": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Quantidade do item no carrinho"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

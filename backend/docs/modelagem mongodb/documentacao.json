@@ -1,0 +1,45 @@
+{
+  "database": "e-commerce",
+  "collections": [
+    {
+      "name": "products",
+      "exampleDocument": "{\n  \"_id\": \"66b22c222e220fbd3f7afe13\",\n  \"id\": 12,\n  \"name\": \"Tamanco Classic Ouro\",\n  \"description\": \"Tamanco de bico redondo feito em couro na cor ouro. Com salto levemente geométrico e cromado, o modelo conta com placa personalizada na tira e vivo dourado na palmilha.\",\n  \"image\": \"/images/product_1722952738588.jpg\",\n  \"category\": \"calcados\",\n  \"new_price\": 449.9,\n  \"old_price\": 600,\n  \"available\": true,\n  \"date\": \"2024-08-06T13:58:58.611Z\",\n  \"__v\": 0\n}",
+      "indexes": [
+        {
+          "key": {
+            "_id": 1
+          },
+          "unique": false,
+          "name": "_id_"
+        },
+        {
+          "key": {
+            "id": 1
+          },
+          "unique": true,
+          "name": "id_1"
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "exampleDocument": "{\n  \"_id\": \"66e22aaeb16581bad75bbf02\",\n  \"name\": \"Luciano\",\n  \"email\": \"luciano@gmail.com\",\n  \"password\": \"$2a$10$exz3YEoxQukwkmcLwYim6eyhRpsPeogXBfgBiF11muPRQRmYhtrz2\",\n  \"dadosCarrinho\": [\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    1,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    1,\n    0,\n    1,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0,\n    0\n  ],\n  \"date\": \"2024-09-11T23:41:34.995Z\",\n  \"__v\": 0\n}",
+      "indexes": [
+        {
+          "key": {
+            "_id": 1
+          },
+          "unique": false,
+          "name": "_id_"
+        },
+        {
+          "key": {
+            "email": 1
+          },
+          "unique": true,
+          "name": "email_1"
+        }
+      ]
+    }
+  ]
+}

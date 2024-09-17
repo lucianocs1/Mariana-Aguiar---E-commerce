@@ -1,0 +1,125 @@
+.itens-carrinho {
+  margin: 100px 10%;
+}
+.itens-carrinho hr {
+  height: 2px;
+  background: #e2e2e2;
+  border: 0;
+}
+.itens-carrinho-format-principal {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 50px;
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 16px;
+  font-weight: 600;
+}
+.itens-carrinho-format {
+  font-size: 16px;
+  font-weight: 500;
+}
+.itens-carrinho-produto-icon {
+  height: 55px;
+}
+.itens-carrinho-remover-icon {
+  width: 12px;
+  margin: 0px 30px;
+  cursor: pointer;
+}
+.itens-carrinho-quantidade {
+  width: 55px;
+  height: 45px;
+  border: 2px solid #ebebeb;
+  background: #fff;
+}
+.itens-carrinho-baixo {
+  display: flex;
+  margin: 100px 0px;
+}
+.itens-carrinho-total {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 200px;
+  gap: 40px;
+}
+.itens-carrinho-total-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0px;
+}
+.itens-carrinho-total button {
+  width: 220px;
+  height: 50px;
+  outline: none;
+  border: none;
+  background: #ff5a5a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.itens-carrinho-quantidade-controles button {
+  font-size: 17px;
+  cursor: pointer;
+  background-color: #fff;
+  border: none;
+}
+
+/* Responsividade */
+@media (max-width: 1280px) {
+  .itens-carrinho {
+    margin: 60px 8%;
+  }
+  .itens-carrinho-format-principal {
+    grid-template-columns: 0.5fr 3fr 0.5fr 0.5fr 0.5fr 0.5fr;
+    gap: 20px;
+    padding: 15px 0px;
+    font-size: 15px;
+  }
+  .itens-carrinho-format {
+    font-size: 15px;
+  }
+  .itens-carrinho-produto-icon {
+    height: 50px;
+  }
+  .itens-carrinho-remover-icon {
+    margin: auto;
+  }
+  .itens-carrinho-quantidade {
+    width: 40px;
+    height: 30px;
+  }
+  .itens-carrinho-baixo {
+    margin: 80px 0px;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  .itens-carrinho-total {
+    margin: 0;
+    min-width: 300px;
+    margin-right: 50%;
+  }
+  .itens-carrinho-total button {
+    max-width: 200px;
+    height: 45px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .itens-carrinho-format-principal {
+    display: none;
+  }
+  .itens-carrinho-format {
+    display: grid;
+  }
+  .itens-carrinho-format-principal {
+    grid-template-columns: 0.5fr 3fr 0.5fr;
+    gap: 10px;
+  }
+}
