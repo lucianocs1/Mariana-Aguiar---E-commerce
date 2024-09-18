@@ -20,14 +20,15 @@ const ShopContextProvider = (props) => {
   // Estado para armazenar os itens do carrinho
   const [carrinhoItems, setCarrinhoItems] = useState(getDefaultCarrinho());
 
+  // Efeito para buscar produtos e o carrinho quando o componente é montado
   useEffect(() => {
-    // Busca todos os produtos quando o componente é montado
+    // Busca todos os produtos do backend e atualiza o estado
     fetch(`${backend_url}/allproducts`)
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Erro ao buscar produtos:", error));
 
-    // Busca o carrinho do usuário se estiver autenticado
+    // Se o usuário estiver autenticado, busca o carrinho
     if (localStorage.getItem("auth-token")) {
       fetch(`${backend_url}/getcart`, {
         method: "POST",
@@ -48,10 +49,12 @@ const ShopContextProvider = (props) => {
   const getTotalCarrinho = () => {
     return Object.keys(carrinhoItems).reduce((totalAmount, item) => {
       if (carrinhoItems[item] > 0) {
+        // Encontra as informações do item no estado de produtos
         const itemInfo = products.find(
           (product) => product.id === Number(item)
         );
         if (itemInfo) {
+          // Calcula o total com base na quantidade e no preço do item
           totalAmount += carrinhoItems[item] * itemInfo.new_price;
         }
       }
@@ -71,17 +74,20 @@ const ShopContextProvider = (props) => {
 
   // Adiciona um item ao carrinho
   const addCarrinho = (itemId) => {
+    // Verifica se o usuário está autenticado
     if (!localStorage.getItem("auth-token")) {
       alert("Por favor, efetue o seu login.");
       return;
     }
     console.log(`Adicionando item ${itemId} ao carrinho`);
 
+    // Atualiza o estado do carrinho
     setCarrinhoItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] || 0) + 1,
     }));
 
+    // Faz uma requisição ao backend para adicionar o item ao carrinho
     fetch(`${backend_url}/addtocart`, {
       method: "POST",
       headers: {
@@ -96,8 +102,10 @@ const ShopContextProvider = (props) => {
   // Remove um item do carrinho
   const removeCarrinho = (itemId) => {
     if (carrinhoItems[itemId] > 0) {
+      // Atualiza o estado do carrinho
       setCarrinhoItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
 
+      // Faz uma requisição ao backend para remover o item do carrinho
       fetch(`${backend_url}/removefromcart`, {
         method: "POST",
         headers: {
@@ -113,8 +121,10 @@ const ShopContextProvider = (props) => {
   // Atualiza a quantidade de um item no carrinho
   const updateCarrinhoItemQt = (itemId, quantity) => {
     if (quantity > 0) {
+      // Atualiza o estado do carrinho
       setCarrinhoItems((prev) => ({ ...prev, [itemId]: quantity }));
 
+      // Faz uma requisição ao backend para atualizar o carrinho
       fetch(`${backend_url}/updatecart`, {
         method: "POST",
         headers: {
@@ -125,7 +135,8 @@ const ShopContextProvider = (props) => {
         body: JSON.stringify({ itemId, quantity }),
       }).catch((error) => console.error("Erro ao atualizar carrinho:", error));
     } else {
-      removeCarrinho(itemId); // Opcionalmente remove o item se a quantidade for zero
+      // Opcionalmente remove o item se a quantidade for zero
+      removeCarrinho(itemId);
     }
   };
 

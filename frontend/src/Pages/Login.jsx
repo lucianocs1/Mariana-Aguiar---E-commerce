@@ -1,25 +1,34 @@
-import React, { useState } from "react";
-import "./CSS/Login.css";
+import React, { useState } from "react"; // Importa o React e useState para criar o componente
+import "./CSS/Login.css"; // Importa o CSS para estilizar o componente
 
 const LoginSignup = () => {
+  // Estado para alternar entre "Entrar" e "Crie sua conta"
   const [state, setState] = useState("Entrar");
+
+  // Estado para armazenar os dados do formulário
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
 
+  // Estado para controlar se o checkbox de termos está marcado
   const [isChecked, setIsChecked] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // Estado para exibir o modal
 
+  // Estado para controlar a exibição do modal de sucesso
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Função para atualizar o estado do formulário quando o usuário digita
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Função para atualizar o estado do checkbox
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
 
+  // Função para realizar o login
   const login = async () => {
     try {
       const response = await fetch("http://localhost:4000/login", {
@@ -34,22 +43,21 @@ const LoginSignup = () => {
       const data = await response.json();
 
       if (data.success) {
-        localStorage.setItem("auth-token", data.token);
-        localStorage.setItem("user-name", data.username);
-        window.location.replace("/");
+        localStorage.setItem("auth-token", data.token); // Armazena o token no localStorage
+        localStorage.setItem("user-name", data.username); // Armazena o nome do usuário no localStorage
+        window.location.replace("/"); // Redireciona para a página inicial
       } else {
-        alert(data.errors);
+        alert(data.errors); // Exibe mensagem de erro se o login falhar
       }
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      console.error("Erro ao fazer login:", error); // Loga o erro no console
     }
   };
 
+  // Função para realizar o cadastro
   const signup = async () => {
     if (!isChecked) {
-      alert(
-        "Você precisa concordar com os termos de uso e política de privacidade para continuar."
-      );
+      alert("Você precisa concordar com os termos de uso e política de privacidade para continuar.");
       return;
     }
 
@@ -66,23 +74,24 @@ const LoginSignup = () => {
       const data = await response.json();
 
       if (data.success) {
-        localStorage.setItem("auth-token", data.token);
-        localStorage.setItem("user-name", data.username);
+        localStorage.setItem("auth-token", data.token); // Armazena o token no localStorage
+        localStorage.setItem("user-name", data.username); // Armazena o nome do usuário no localStorage
         setShowSuccessModal(true); // Exibe o modal de sucesso
       } else {
-        alert(data.errors);
+        alert(data.errors); // Exibe mensagem de erro se o cadastro falhar
       }
     } catch (error) {
-      console.error("Erro ao fazer cadastro:", error);
+      console.error("Erro ao fazer cadastro:", error); // Loga o erro no console
     }
   };
 
   return (
     <div className="log">
       <div className="log-container">
-        <h1>{state}</h1>
+        <h1>{state}</h1> {/* Exibe "Entrar" ou "Crie sua conta" dependendo do estado */}
 
         <div className="log-fields">
+          {/* Campos do formulário, nome só aparece em "Crie sua conta" */}
           {state === "Crie sua conta" && (
             <input
               type="text"
@@ -108,10 +117,12 @@ const LoginSignup = () => {
           />
         </div>
 
+        {/* Botão que chama a função login ou signup dependendo do estado */}
         <button onClick={() => (state === "Entrar" ? login() : signup())}>
           {state}
         </button>
 
+        {/* Texto para alternar entre tela de login e cadastro */}
         {state === "Entrar" ? (
           <p className="log-login">
             Não possui conta?{" "}
@@ -126,6 +137,7 @@ const LoginSignup = () => {
           </p>
         )}
 
+        {/* Checkbox para concordar com termos, só aparece em "Crie sua conta" */}
         {state === "Crie sua conta" && (
           <div className="log-agree">
             <input
@@ -135,8 +147,7 @@ const LoginSignup = () => {
               onChange={handleCheckboxChange}
             />
             <p>
-              Ao continuar, concordo com os termos de uso e política de
-              privacidade.
+              Ao continuar, concordo com os termos de uso e política de privacidade.
             </p>
           </div>
         )}
@@ -155,4 +166,4 @@ const LoginSignup = () => {
   );
 };
 
-export default LoginSignup;
+export default LoginSignup; // Exporta o componente LoginSignup para uso em outras partes da aplicação

@@ -4,65 +4,75 @@ import { ShopContext } from "../../Context/ShopContext";
 import { backend_url, moeda } from "../../App";
 
 const ProdutoDisplay = ({ product }) => {
+  // Contexto para gerenciar o carrinho
   const { addCarrinho } = useContext(ShopContext);
-  const [selectedSize, setSelectedSize] = useState(null); // Armazena o tamanho selecionado
-  const [selectedColor, setSelectedColor] = useState(null); // Armazena a cor selecionada
-  const [sizeError, setSizeError] = useState(false); // Para exibir mensagem de erro de tamanho
-  const [colorError, setColorError] = useState(false); // Para exibir mensagem de erro de cor
+  
+  // Estados para armazenar as seleções do usuário
+  const [selectedSize, setSelectedSize] = useState(null); // Tamanho selecionado
+  const [selectedColor, setSelectedColor] = useState(null); // Cor selecionada
+  const [sizeError, setSizeError] = useState(false); // Erro de tamanho
+  const [colorError, setColorError] = useState(false); // Erro de cor
 
+  // Função para lidar com a seleção de tamanho
   const handleSizeClick = (size) => {
     setSelectedSize(size);
-    setSizeError(false); // Remove a mensagem de erro ao selecionar o tamanho
+    setSizeError(false); // Remove o erro se um tamanho é selecionado
   };
 
+  // Função para lidar com a seleção de cor
   const handleColorClick = (color) => {
     setSelectedColor(color);
-    setColorError(false); // Remove a mensagem de erro ao selecionar a cor
+    setColorError(false); // Remove o erro se uma cor é selecionada
   };
 
+  // Função para obter as opções de tamanho com base na categoria do produto
   const getSizeOptions = () => {
     if (product.category.includes("calcados")) {
-      return ["36", "37", "38", "39", "40"];
+      return ["36", "37", "38", "39", "40"]; // Tamanhos para calçados
     } else if (product.category.includes("roupas")) {
-      return ["P", "M", "G", "GG", "XG"];
+      return ["P", "M", "G", "GG", "XG"]; // Tamanhos para roupas
     } else {
       return [];
     }
   };
 
+  // Função para obter as opções de cor com base na categoria do produto
   const getColorOptions = () => {
     if (product.category.includes("bolsas")) {
-      return ["Preto", "Marrom", "Bege", "Vermelho"];
+      return ["Preto", "Marrom", "Bege", "Vermelho"]; // Cores para bolsas
     } else {
       return [];
     }
   };
 
+  // Função para adicionar o produto ao carrinho
   const handleAddCarrinho = () => {
-    // Verifica se o tamanho e a cor foram selecionados, se aplicável
+    // Verifica se o tamanho e a cor foram selecionados, se necessário
     if (
       product.category.includes("calcados") ||
       product.category.includes("roupas")
     ) {
       if (!selectedSize) {
-        setSizeError(true); // Exibe mensagem de erro
+        setSizeError(true); // Exibe erro se tamanho não selecionado
         return;
       }
     }
 
     if (product.category.includes("bolsas") && !selectedColor) {
-      setColorError(true); // Exibe mensagem de erro
+      setColorError(true); // Exibe erro se cor não selecionada
       return;
     }
 
-    addCarrinho(product.id); // Adiciona ao carrinho
+    addCarrinho(product.id); // Adiciona o produto ao carrinho
   };
 
+  // Obtém opções de tamanho e cor
   const sizeOptions = getSizeOptions();
   const colorOptions = getColorOptions();
 
   return (
     <div className="exibicao-produto">
+      {/* Seção de imagens do produto */}
       <div className="exibicao-produto-esquerda">
         <div className="exibicao-produto-lista-imagens">
           <img src={backend_url + product.image} alt="img" />
@@ -78,6 +88,7 @@ const ProdutoDisplay = ({ product }) => {
           />
         </div>
       </div>
+      {/* Seção de detalhes do produto */}
       <div className="exibicao-produto-direita">
         <h1>{product.name}</h1>
         <div className="exibicao-produto-direita-precos">
@@ -93,6 +104,7 @@ const ProdutoDisplay = ({ product }) => {
         <div className="exibicao-produto-direita-descricao">
           {product.description}
         </div>
+        {/* Seção de seleção de tamanho */}
         {sizeOptions.length > 0 && (
           <div className="exibicao-produto-direita-tamanho">
             <h1>Selecione o tamanho</h1>
@@ -116,6 +128,7 @@ const ProdutoDisplay = ({ product }) => {
             )}
           </div>
         )}
+        {/* Seção de seleção de cor */}
         {colorOptions.length > 0 && (
           <div className="exibicao-produto-direita-cor">
             <h1>Cores disponíveis</h1>
